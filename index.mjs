@@ -15,6 +15,6 @@ app.use(express.json());
 
 app.use("/", URLRoute);
 
-app.listen(5050, () => {
+app.listen(process.env.PORT || 5050, () => {
   console.log("I am Working!");
 });
