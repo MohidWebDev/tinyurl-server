@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { ConnectMongoDb } from "./Utils/mongodb.js";
 import URLRoute from "./Routes/urls.js";
+import { connectRedis } from "./Utils/redis.js";
 
 dotenv.config();
 
@@ -12,10 +13,12 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: [process.env.CLIENT_URL, "http://localhost:5173"],
   }),
 );
 app.use(express.json());
+
+connectRedis();
 
 app.use("/", URLRoute);
 
