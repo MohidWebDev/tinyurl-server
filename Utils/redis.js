@@ -20,3 +20,20 @@ export const connectRedis = async () => {
   }
   console.log("Connected to Redis");
 };
+
+export const setCache = async (key, value, expireSeconds = 3600) => {
+  try {
+    await redisClient.set(key, JSON.stringify(value), {
+      EX: expireSeconds,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getCache = async (key) => {
+  const data = await redisClient.get(key);
+  return data ? JSON.parse(data) : null;
+};
+
+export default redisClient;
